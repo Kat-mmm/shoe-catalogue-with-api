@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <style>
+        nav ul{
+            margin-right: 50px;
+        }
+    </style>
+    <title>Checkout</title>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <img src="/images/logo.png" alt="logo">
+            <ul>
+                <a href="/"><li>home</li></a>
+                <a href="#contactForm"><li>contact</li></a>
+            </ul>
+        </nav>
+
+        <section class="main-section">
+            <div class="bag-section">
+                <h2>Shopping Bag</h2>
+            </div>
+            <div class="summary-section">
+                <h2>Order Summary</h2>
+            </div>
+        </section>
+
+        <footer class="custom-footer">
+            <div class="custom-container">
+              <div class="row">
+                <div>
+                  <h4>Contact Us</h4>
+                  <form class="custom-form" id="contactForm" action="contact.php" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                  </form>
+                </div>
+                <div>
+                  <h4>Follow Us</h4>
+                  <ul class="custom-social-icons">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <p>&copy; 2023 Exclusive Wear. All rights reserved.</p>
+                </div>
+              </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Add Shoe</title>
+    <style>
+        nav ul{
+            margin-right: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <img src="/images/logo.png" alt="logo">
+            <ul>
+                <a href="/"><li>home</li></a>
+                <a href="#contactForm"><li>contact</li></a>
+            </ul>
+        </nav>
+        <div id="popup-container">
+            <div id="form-container">
+              <h2>Add New Shoe</h2>
+              <form id="shoe-form" action="/shoe/add" method="POST">
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" required>
+
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" required>
+
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" required>
+
+                <label for="size">Size:</label>
+                <input type="number" id="size" name="size" required>
+
+                <label for="in_stock">Quantity:</label>
+                <input type="number" id="in_stock" name="in_stock" required>
+
+                <label for="img_url">Image URL:</label>
+                <input type="text" id="img_url" name="img_url" required>
+          
+                <button type="submit">Add Shoe</button>
+              </form>
+            </div>
+        </div>
+
+        <footer class="custom-footer">
+            <div class="custom-container">
+              <div class="row">
+                <div>
+                  <h4>Contact Us</h4>
+                  <form class="custom-form" id="contactForm" action="contact.php" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                  </form>
+                </div>
+                <div>
+                  <h4>Follow Us</h4>
+                  <ul class="custom-social-icons">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <p>&copy; 2023 Exclusive Wear. All rights reserved.</p>
+                </div>
+              </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

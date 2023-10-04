@@ -1,0 +1,22 @@
+INSERT INTO shoes (color, brand, price, size, in_stock, img_url)
+VALUES
+    ('blue', 'Nike', 1600, 5, 5, './images/blue-nike.webp'),
+    ('orange', 'Adidas', 1999, 8, 3, 'https://assets.adidas.com/images/w_600,f_auto,q_auto/f587213eef3649839031ae7b0136f8a3_9366/NMD_R1_Shoes_Orange_HP9661_01_standard.jpg'),
+    ('black', 'Puma', 2349, 3, 4, 'https://deichmann.scene7.com/asset/deichmann/US_01_400488_00?$rr_main$&defaultImage=default_obs'),
+    ('red', 'New Balance', 1899, 6, 12, 'https://d2ob0iztsaxy5v.cloudfront.net/product/196369/1963693050_zm.jpg'),
+    ('pink', 'Nike', 3400, 7, 3, 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/04eb44b1-53bc-4628-a242-7cac3442f6a2/air-vapormax-plus-womens-shoes-xbt7zf.png'),
+    ('white', 'puma', 2399, 2, 7, 'https://theathletesfoot.co.za/cdn/shop/products/png_13_-Copy_800x.webp?v=1668162520'),
+    ('brown', 'Adidas', 1299, 5, 15, 'https://assets.adidas.com/images/w_600,f_auto,q_auto/2d0a0755ce8441a4bbf9aaa400ee65c4_9366/OZWEEGO_Shoes_Beige_EE6462_07_standard.jpg'),
+    ('orange', 'New Balance', 2549, 8, 20, 'https://www.footgear.co.za/wp-content/uploads/2023/05/feature-NBLL0089707.jpg'),
+    ('green', 'New Balance', 1899, 5, 7, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRIZxFegJDptzlpxXhGBNoCDBqSeejIwJaBaYH7c7Dr5N7qBKsrAzcTVof3oVFsTTLOKpRtP3brjktMILdK_cGx0Br2FhkOLPPnbLr6Cm3nhvhXM7_UNg9A5h4&usqp=CAE'),
+    ('white', 'Reebok', 899, 6, 18, 'https://cdn.zando.co.za/p/153712-9328-217351-1-zoom.jpg'),
+    ('black', 'Nike', 1400, 5, 22, 'https://static.nike.com/a/images/t_default/b05afb11-db22-461d-b94e-49bdc316b445/revolution-6-road-running-shoes-FgfhgR.png'),
+    ('green', 'Adidas', 2567, 7, 9, 'https://images.asos-media.com/products/adidas-originals-gazelle-trainers-in-collegiate-green/203694687-1-collegiategreen?$n_750w$&wid=750&hei=750&fit=crop'),
+    ('red', 'Reebok', 1899, 6, 2, 'https://cdn.zando.co.za/p/340025-5035-520043-1-big.jpg'),
+    ('pink', 'Puma', 3199, 7, 3, 'https://theathletesfoot.co.za/cdn/shop/products/buty-foreverrun-nitro-wns-ravish-fresh-p-37775805-63ff2bdb8615b_800x.jpg?v=1681987646'),
+    ('red', 'Puma', 3899, 6, 6, 'https://images.puma.net/images/377572/01/sv01/fnd/ZAF/'),
+    ('black', 'Adidas', 3400, 4, 9, 'https://assets.adidas.com/images/w_940,f_auto,q_auto/2c43c4cdaf59417b99e4ad2100c3f874_9366/GZ7740_01_standard.jpg'),
+    ('brown', 'Nike', 1800, 6, 10, 'https://cdn.shopify.com/s/files/1/0591/1805/9685/products/Travis-Scott-Air-Jordan-1-High-OG-CD4487-100-Release-Date-Price_1200x1200.jpg?v=1630792683'),
+    ('pink', 'New balance', 2499, 3, 18, 'https://deichmann.scene7.com/asset/deichmann/US_01_401184_00?$rr_pdp_zoom$&defaultImage=default_obs'),
+    ('blue', 'Nike', 3899, 6, 5, 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/ufdvjwizdclhgpygwxsb/air-vapormax-plus-mens-shoes-nC0dzF.png'),
+    ('orange', 'Adidas', 6999, 6, 8, 'https://images.solecollector.com/complex/images/c_crop,h_1125,w_2000,x_0,y_438/xwdaztxnvb2izcpff5ee/pharrell-adidas-nmd-hu-orange-gy0095-pair.jpg');

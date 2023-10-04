@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Shoe Catalogue</title>
+</head>
+<body x-data="shoeCatalogue">
+    <div class="container">
+        <nav>
+            <img src="/images/logo.png" alt="logo">
+            <ul>
+                <a href="#home"><li>home</li></a>
+                <a href="#main"><li>shop all</li></a>
+                <a href="#contactForm"><li>contact</li></a>
+            </ul>
+            <!-- <img src="./images/icons8-shopping-bag-50.png" alt="bag" class="icon"> -->
+            <div class="right-nav">
+                <a href="/shoe/add" class="add-product">add</a>
+                <a href="/shoe/checkout" class="bag">
+                    <i class="fa-sharp fa-solid fa-bag-shopping fa-xl"></i>
+                    <span class="cart-items">0</span>
+                </a>
+            </div>
+        </nav>
+
+        <header id="home">
+            <img src="/images/hdshoe1.jpg" alt="orangeshoe">
+            <section>
+                <h1>Exclusive Shoes For All Indivuduals</h1>
+                <p>Step into Shoe Store, your gateway to stylish footwear. Explore our curated collection of trendy, comfortable shoes for all occasions. Find the perfect pair, from elegant heels to casual sneakers. Start your fashionable journey today.</p>
+                <a href="#main">Shop Collection</a>
+            </section>
+            <img src="/images/hdshoe2.jpg" alt="whiteshoe">
+        </header>
+
+        <div class="main" id="main">
+            <h1>Shoe Catalogue</h1>
+            <form action="" id="filter-form">
+                <div class="dropdowns">
+                    <label for="color-dropdown">Color:</label>
+                    <select id="color-dropdown" name="colors">
+                        <option value="">All colors</option>
+                        <option value="white">White</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="pink">Pink</option>
+                        <option value="red">Red</option>
+                        <option value="black">Black</option>
+                        <option value="orange">Orange</option>
+                        <option value="brown">Brown</option>
+                    </select>
+        
+                    <label for="size-dropdown">Size:</label>
+                    <select id="size-dropdown" name="sizes">
+                        <option value="">All sizes</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+        
+                    <label for="brand-dropdown">Brand:</label>
+                    <select id="brand-dropdown" name="brands">
+                        <option value="">All brands</option>
+                        <option value="Nike">Nike</option>
+                        <option value="Adidas">Adidas</option>
+                        <option value="Puma">Puma</option>
+                        <option value="New Balance">New Balance</option>
+                        <option value="Reebok">Reebok</option>
+                    </select>
+                </div>
+
+                <button class="search-btn">Search</button>
+            </form>
+            
+            <p class="stock-p"></p>
+
+            <div class="shoes-container">
+               {{#each shoes}}
+                    <div class="shoe">
+                        <img src={{img_url}} alt={{brand}}>
+                        <h4>{{brand}} - <span>{{color}}</span></h4>
+                        <p class="price">R {{price}}</p>
+                        <div class="details">
+                            <p class="size">Size: <span>{{size}}</span></p>
+                            <p class="stock">In stock: <span>{{in_stock}}</span></p>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                {{/each}}
+
+            </div>
+        </div>
+        
+        <footer class="custom-footer">
+            <div class="custom-container">
+              <div class="row">
+                <div>
+                  <h4>Contact Us</h4>
+                  <form class="custom-form" id="contactForm" action="contact.php" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                  </form>
+                </div>
+                <div>
+                  <h4>Follow Us</h4>
+                  <ul class="custom-social-icons">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <p>&copy; 2023 Exclusive Wear. All rights reserved.</p>
+                </div>
+              </div>
+            </div>
+        </footer>        
+    </div>
+    <script>
+
+    </script>
+{{!-- 
+    <script src="/javascript/shoe-catalogue.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script> --}}
+    <script src="https://kit.fontawesome.com/0dc0e0665a.js" crossorigin="anonymous"></script>
+</body>
+</html>
