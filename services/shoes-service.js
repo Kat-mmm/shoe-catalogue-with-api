@@ -20,7 +20,7 @@ export default function ShoesService(db){
         return result;
     }
 
-    async function shoesByColor(color){
+    async function Color(color){
         const result = await db.any(`SELECT * FROM shoes WHERE color=$1`, [color]);
 
         return result;
@@ -75,7 +75,7 @@ export default function ShoesService(db){
         getAllShoes,
         shoesByBrand,
         shoesBySize,
-        shoesByColor,
+        Color,
         shoesByBrandSize,
         shoesByColorSize,
         shoesByBrandColor,

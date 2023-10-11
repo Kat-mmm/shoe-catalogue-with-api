@@ -513,4 +513,71 @@ header img{
   .summary-section{
     background-color: #ccc;
   }
+
+  .left{
+    width: 100%;
+    background-color: #f9aa33;
+  }
   
+  .login-container, .register-container{
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.login, .login form section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.login-container form label, .register-container form label{
+    align-self: flex-start;
+}
+
+.login{
+    width: 100%;
+}
+
+.login form{
+    width: 50%;
+}
+
+.login input{
+    width: 100%;
+    padding: 7px;
+}
+
+.login button, .admin-button{
+    margin-top: 17px;
+    background-color: #f9aa33;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 200px;
+    font-family: 'Inter';
+    border-radius: 6px;
+    font-size: medium;
+    cursor: pointer;
+}
+
+.login button:hover{
+    background-color: #f8c06b;
+}
+
+.user-p{
+  display: flex;
+  align-items: center;
+  color: #4a6572;
+}
+
+.user-p i{
+  margin: 3px;
+}
+
+.user-p span{
+  justify-self: flex-start;
+  margin-left: 5px;
+}

@@ -5,6 +5,12 @@ export default function ShoesRoutes(ShoesService){
         res.render('index', { shoes: shoesData })
     }
 
+    async function getShoes(req, res){
+        const shoesData = await ShoesService.getAllShoes();
+
+        res.render('shoes', { shoes: shoesData, name: req.session.user.name})
+    }
+
     async function addShoe(req, res){
         res.render('add-shoe');
     }
@@ -29,7 +35,8 @@ export default function ShoesRoutes(ShoesService){
         index,
         addShoe,
         addNewShoe,
-        checkout
+        checkout,
+        getShoes
     }
 
 }

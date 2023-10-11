@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Add Shoe</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .logo{
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left"></div>
+        <div class="login-container">
+            <div class="login">
+                <div>
+                    <img src="/images/logo.png" alt="logo" class="logo">
+                </div>
+                {{!-- {{#if messages.error}}
+                        <div class="error-message animate__shakeX">{{messages.error}}</div>
+                {{/if}} --}}
+                <form action="/login" method="post">
+                    <section>
+                        <label for="username">Username</label>
+                        <input id="username" name="email" type="text" autocomplete="email" required autofocus>
+                    </section>
+                    <section>
+                        <label for="current-password">Password</label>
+                        <input id="current-password" name="password" type="password" autocomplete="current-password" required>
+                    </section>
+                    <button type="submit">Login</button>
+                </form>
+                <a href="/register">Not Registered? Sign Up</a>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

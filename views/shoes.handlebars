@@ -17,8 +17,11 @@
                 <a href="#contactForm"><li>contact</li></a>
             </ul>
             <div class="right-nav">
+                <div class="user-p">
+                    <i class="fa-regular fa-user"></i>
+                    <span>{{name}}</span>
+                </div>
                 <a href="/logout">Logout</a>
-                <a href="/shoe/add" class="add-product">add</a>
                 <a href="/shoe/checkout" class="bag">
                     <i class="fa-sharp fa-solid fa-bag-shopping fa-xl"></i>
                     <span class="cart-items">0</span>
@@ -128,8 +131,73 @@
         </footer>        
     </div>
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('filter-form');
+        const shoesContainer = document.querySelector('.shoes-container');
 
-    </script>
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let color = document.getElementById('color-dropdown').value;
+            let size = document.getElementById('size-dropdown').value;
+            let brand = document.getElementById('brand-dropdown').value;
+
+            brand = brand.toLowerCase();
+
+            let apiUrl = `/api/shoes`;
+
+            if (brand) apiUrl += `/brand/${brand}`;
+            if (size) apiUrl += `/size/${size}`;
+            if (color) apiUrl += `/color/${color}`;
+
+            if(brand && color){
+                apiUrl = '';
+                apiUrl += `/api/shoes/brand/${brand}/color/${color}`;
+            } 
+            if(brand && size){
+                apiUrl = '';
+                apiUrl += `/api/shoes/brand/${brand}/size/${size}`;
+            } 
+            if(color && size){
+                apiUrl = '';
+                apiUrl += `/api/shoes/brand/${brand}/size/${size}`;
+            } 
+
+            if (!brand && !size && !color) {
+                apiUrl = '/api/shoes';
+            }
+
+            axios.get(apiUrl)
+                .then(function(response) {
+                    const shoes = response.data.data;
+
+                    shoesContainer.innerHTML = '';
+
+                    shoes.forEach(function(shoe) {
+                        const shoeElement = document.createElement('div');
+                        shoeElement.classList.add('shoe');
+
+                        shoeElement.innerHTML = `
+                            <img src="${shoe.img_url}" alt="${shoe.brand}">
+                            <h4>${shoe.brand} - <span>${shoe.color}</span></h4>
+                            <p class="price">R ${shoe.price}</p>
+                            <div class="details">
+                                <p class="size">Size: <span>${shoe.size}</span></p>
+                                <p class="stock">In stock: <span>${shoe.in_stock}</span></p>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        `;
+
+                        shoesContainer.appendChild(shoeElement);
+                    });
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
+
 {{!-- 
     <script src="/javascript/shoe-catalogue.js"></script>
     <script src="https://unpkg.com/alpinejs" defer></script> --}}

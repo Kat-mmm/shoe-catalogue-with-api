@@ -52,7 +52,7 @@ export default function ShoesApi(ShoesService){
 
     async function getShoesByColor(req, res){
         try{
-            const shoesByColor = await ShoesService.ShoesByColor(req.params.color);
+            const shoesByColor = await ShoesService.Color(req.params.color);
 
             res.json({
                 status: 'success',
