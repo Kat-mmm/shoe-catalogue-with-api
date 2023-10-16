@@ -15,3 +15,11 @@ CREATE TABLE users(
     password VARCHAR(255) NOT NULL,
     is_admin BOOLEAN NOT NULL
 );
+
+CREATE TABLE cart (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    shoe_id INTEGER REFERENCES shoes(id),
+    quantity INTEGER,
+    FOREIGN KEY (shoe_id) REFERENCES shoes(id)
+);

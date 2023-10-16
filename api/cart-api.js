@@ -1,27 +1,103 @@
-// import { randomBytes } from 'crypto';
+export default function CartApi(cartService) {
+    async function addToCart(req, res){
+        try {
+            const userId = req.session.user.id;
+            const shoeId = req.params.shoeId;
+    
+            await cartService.addToCart(userId, shoeId);
+    
+            res.json({
+                status: 'success',
+            });
+        } catch(err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
 
-// export default function CartApi(cartService) {
-//     function generateRandomCode(length) {
-//         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-//         const randomBytesBuffer = randomBytes(length);
-//         let code = '';
+    async function getCart(req, res){
+        try {
+            const userId = req.session.user.id;
+    
+            const cart = await cartService.getCart(userId);
+    
+            res.json({
+                status: 'success',
+                data: cart
+            });
+        } catch(err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
 
-//         for (let i = 0; i < length; i++) {
-//             const randomIndex = randomBytesBuffer[i] % characters.length;
-//             code += characters.charAt(randomIndex);
-//         }
+    async function getCartShoes(req, res){
+        try {
+            const userId = req.session.user.id;
+    
+            const cartShoes = await cartService.getCartShoes(userId);
+    
+            const total = cartShoes.reduce((acc, item) => {
+                return acc + (item.price * item.quantity);
+            }, 0);
+    
+            res.json({
+                status: 'success',
+                data: cartShoes,
+                total
+            });
+        } catch(err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
 
-//         return code;
-//     }
+    async function removeFromCart(req, res){
+        try {
+            const userId = req.session.user.id; // Assuming you have user information stored in req.user
+            const shoeId = req.params.id; // Assuming you pass the shoe id as a parameter
+    
+            await cartService.removeFromCart(userId, shoeId);
+    
+            res.json({
+                status: 'success',
+            });
+        } catch(err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
 
-//     async function createCart(req, res){
-//         const randomCode = generateRandomCode(10); // Change 10 to the desired length of your code
-//         console.log(randomCode);
+    async function clearCart(req, res){
+        try {
+            const userId = req.session.user.id; // Assuming you have user information stored in req.user
+    
+            await cartService.clearCart(userId);
+    
+            res.json({
+                status: 'success',
+            });
+        } catch(err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
 
-
-//     }
-
-//     return{
-
-//     }
-// }
+    return{
+        addToCart,
+        getCart,
+        getCartShoes,
+        removeFromCart,
+        clearCart
+    }
+}

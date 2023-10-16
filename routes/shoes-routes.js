@@ -16,7 +16,9 @@ export default function ShoesRoutes(ShoesService){
     }
 
     async function checkout(req, res){
-        res.render('cart');
+        let shoesData = await ShoesService.getCartShoes(req.session.user.id);
+
+        res.render('cart', { shoes: shoesData});
     }
 
     async function addNewShoe(req, res){

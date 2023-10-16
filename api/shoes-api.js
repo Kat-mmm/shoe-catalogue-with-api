@@ -160,7 +160,7 @@ export default function ShoesApi(ShoesService){
 
     async function updateStockLevel(req, res){
         try{
-            await ShoesService.updateStock(req.params.id);
+            await ShoesService.updateStock(req.params.shoeId);
 
             res.json({
                 status: 'success',

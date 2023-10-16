@@ -10,13 +10,20 @@ import ShoesRoutes from './routes/shoes-routes.js';
 import ShoesApi from './api/shoes-api.js';
 import AuthRoutes from './routes/authRoutes.js';
 import UserService from './services/user-service.js';
+import CartService from './services/cart-service.js';
+import CartApi from './api/cart-api.js';
 
-const userService = UserService(db);
-const authRoutes = AuthRoutes(userService, bcrypt);
-
+//Service Instances
 const shoesService = ShoesService(db);
+const userService = UserService(db);
+const cartService =  CartService(db);
+
+//Routes Instances
+const authRoutes = AuthRoutes(userService, bcrypt);
 const shoesRoutes = ShoesRoutes(shoesService);
+const cartRoutes = ShoesRoutes(cartService);
 const shoesAPI = ShoesApi(shoesService);
+const cartAPI = CartApi(cartService);
 
 let app = express();
 
@@ -49,10 +56,10 @@ app.get('/', authenticateUser, authRoutes.getLogin);
 app.get('/admin', authenticateUser, checkAdmin, shoesRoutes.index)
 app.get('/shoes', authenticateUser, shoesRoutes.getShoes)
 app.get('/shoe/add', shoesRoutes.addShoe);
-app.get('/shoe/checkout', shoesRoutes.checkout)
+app.get('/shoe/checkout', cartRoutes.checkout)
 app.post('/shoe/add', shoesRoutes.addNewShoe);
 
-//api routes
+//shoes api routes
 app.get('/api/shoes', shoesAPI.all);
 app.get('/api/shoes/brand/:brandname', shoesAPI.getShoesByBrand)
 app.get('/api/shoes/size/:size', shoesAPI.getShoesBySize)
@@ -64,6 +71,11 @@ app.get('/api/shoes/brand/:brandname/size/:size/color/:color', shoesAPI.getShoes
 app.post('/api/shoes/sold/:id', shoesAPI.updateStockLevel)
 app.post('/api/shoes', shoesAPI.addShoeToStock)
 
+//cart api routes
+app.get('/api/cart/get', cartAPI.getCart);
+app.get('/api/cart/shoes/get', cartAPI.getCartShoes);
+app.post('/api/cart/add/:shoeId', cartAPI.addToCart);
+// app.post('/api/cart/remove/:shoeId', cartAPI.removeFromCart);
 
 function authenticateUser(req, res, next) {
     if (req.session.user) {

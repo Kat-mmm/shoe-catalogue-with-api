@@ -7,6 +7,38 @@
         nav ul{
             margin-right: 50px;
         }
+        .cart-items-container {
+            
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .cart-shoe {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-width: 400px;
+            display: flex;
+        }
+
+        .cart-shoe img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .shoe-details {
+            margin-bottom: 10px;
+        }
+
+        .cart-price {
+            font-weight: bold;
+        }
+
+        .cart-size span {
+            font-weight: bold;
+        }
     </style>
     <title>Checkout</title>
 </head>
@@ -15,7 +47,7 @@
         <nav>
             <img src="/images/logo.png" alt="logo">
             <ul>
-                <a href="/"><li>home</li></a>
+                <a href="/shoes"><li>home</li></a>
                 <a href="#contactForm"><li>contact</li></a>
             </ul>
         </nav>
@@ -23,6 +55,21 @@
         <section class="main-section">
             <div class="bag-section">
                 <h2>Shopping Bag</h2>
+                <div class="cart-items-container">
+                  {{#each shoes}}
+                      <div class="cart-shoe">
+                          <img src="{{img_url}}" alt="{{brand}}">
+                          <div class="shoe-details">
+                              <h4>{{brand}} - <span>{{color}}</span></h4>
+                              <p class="cart-price">R {{price}}</p>
+                              <div class="cart-details">
+                                  <p class="cart-size">Size: <span>{{size}}</span></p>
+                              </div>
+                          </div>
+                      </div>
+                  {{/each}}
+              </div>
+
             </div>
             <div class="summary-section">
                 <h2>Order Summary</h2>

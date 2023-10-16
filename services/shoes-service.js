@@ -7,7 +7,6 @@ export default function ShoesService(db){
 
     async function shoesByBrand(brand){
         brand = brand.toLowerCase();
-        brand = brand.charAt(0).toUpperCase() + brand.slice(1);
 
         const result = await db.any(`SELECT * FROM shoes WHERE brand=$1`, [brand]);
 
@@ -28,7 +27,6 @@ export default function ShoesService(db){
 
     async function shoesByBrandSize(brand, size){
         brand = brand.toLowerCase();
-        brand = brand.charAt(0).toUpperCase() + brand.slice(1);
         
         const result = await db.any(`SELECT * FROM shoes WHERE brand=$1 AND size=$2`, [brand, size]);
 
@@ -62,7 +60,6 @@ export default function ShoesService(db){
         let img_url = shoeData.img_url;
 
         brand = brand.toLowerCase();
-        brand = brand.charAt(0).toUpperCase() + brand.slice(1);
 
         await db.none(`INSERT INTO shoes (color, brand, price, size, in_stock, img_url) VALUES ($1, $2, $3, $4, $5, $6)`, [color, brand, price, size, in_stock, img_url]);
     }

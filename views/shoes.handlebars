@@ -24,7 +24,7 @@
                 <a href="/logout">Logout</a>
                 <a href="/shoe/checkout" class="bag">
                     <i class="fa-sharp fa-solid fa-bag-shopping fa-xl"></i>
-                    <span class="cart-items">0</span>
+                    <span class="cart-items"></span>
                 </a>
             </div>
         </nav>
@@ -94,7 +94,7 @@
                             <p class="size">Size: <span>{{size}}</span></p>
                             <p class="stock">In stock: <span>{{in_stock}}</span></p>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <button class="add-to-cart" data-shoeid="{{id}}">Add to Cart</button>
                     </div>
                 {{/each}}
             </div>
@@ -131,72 +131,96 @@
         </footer>        
     </div>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('filter-form');
-        const shoesContainer = document.querySelector('.shoes-container');
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('filter-form');
+            const shoesContainer = document.querySelector('.shoes-container');
+            const itemsCountEl = document.querySelector('.cart-items');
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
 
-            let color = document.getElementById('color-dropdown').value;
-            let size = document.getElementById('size-dropdown').value;
-            let brand = document.getElementById('brand-dropdown').value;
+                let color = document.getElementById('color-dropdown').value;
+                let size = document.getElementById('size-dropdown').value;
+                let brand = document.getElementById('brand-dropdown').value;
 
-            brand = brand.toLowerCase();
+                brand = brand.toLowerCase();
 
-            let apiUrl = `/api/shoes`;
+                axios.get('/api/shoes')
+                    .then(function(response) {
+                        const shoes = response.data.data;
 
-            if (brand) apiUrl += `/brand/${brand}`;
-            if (size) apiUrl += `/size/${size}`;
-            if (color) apiUrl += `/color/${color}`;
+                        const filteredShoes = shoes.filter(shoe => {
+                            return (
+                                (brand === '' || shoe.brand === brand) &&
+                                (color === '' || shoe.color === color) &&
+                                (size === '' || shoe.size === parseInt(size))
+                            );
+                        });
 
-            if(brand && color){
-                apiUrl = '';
-                apiUrl += `/api/shoes/brand/${brand}/color/${color}`;
-            } 
-            if(brand && size){
-                apiUrl = '';
-                apiUrl += `/api/shoes/brand/${brand}/size/${size}`;
-            } 
-            if(color && size){
-                apiUrl = '';
-                apiUrl += `/api/shoes/brand/${brand}/size/${size}`;
-            } 
+                        shoesContainer.innerHTML = '';
 
-            if (!brand && !size && !color) {
-                apiUrl = '/api/shoes';
-            }
+                        filteredShoes.forEach(function(shoe) {
+                            const shoeElement = document.createElement('div');
+                            shoeElement.classList.add('shoe');
 
-            axios.get(apiUrl)
-                .then(function(response) {
-                    const shoes = response.data.data;
+                            shoeElement.innerHTML = `
+                                <img src="${shoe.img_url}" alt="${shoe.brand}">
+                                <h4>${shoe.brand} - <span>${shoe.color}</span></h4>
+                                <p class="price">R ${shoe.price}</p>
+                                <div class="details">
+                                    <p class="size">Size: <span>${shoe.size}</span></p>
+                                    <p class="stock">In stock: <span>${shoe.in_stock}</span></p>
+                                </div>
+                                <button class="add-to-cart" data-shoeid="${shoe.id}">Add to Cart</button>
+                            `;
 
-                    shoesContainer.innerHTML = '';
+                            shoesContainer.appendChild(shoeElement);
+                        });
 
-                    shoes.forEach(function(shoe) {
-                        const shoeElement = document.createElement('div');
-                        shoeElement.classList.add('shoe');
-
-                        shoeElement.innerHTML = `
-                            <img src="${shoe.img_url}" alt="${shoe.brand}">
-                            <h4>${shoe.brand} - <span>${shoe.color}</span></h4>
-                            <p class="price">R ${shoe.price}</p>
-                            <div class="details">
-                                <p class="size">Size: <span>${shoe.size}</span></p>
-                                <p class="stock">In stock: <span>${shoe.in_stock}</span></p>
-                            </div>
-                            <button class="add-to-cart">Add to Cart</button>
-                        `;
-
-                        shoesContainer.appendChild(shoeElement);
+                        if(filteredShoes.length === 0){
+                            document.querySelector('.shoes-container').innerHTML = 'Items not available in stock';
+                        }   
+                        
+                    })
+                    .catch(function(error) {
+                        console.error('Error:', error);
                     });
-                })
-                .catch(function(error) {
-                    console.error('Error:', error);
-                });
+            });
+
+            shoesContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('add-to-cart')) {
+                    const shoeId = event.target.dataset.shoeid;
+
+                    axios.post(`/api/cart/add/${shoeId}`)
+                    .then(function(response) {
+                        axios.get('/api/cart/shoes/get')
+                        .then(response =>{
+                            let itemsCount = response.data.data.length;
+
+                            itemsCountEl.innerHTML = itemsCount;
+                        })
+                        .catch(error => {
+                            console.log('Error:', error);
+                        })
+                    })
+                    .catch(function(error) {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+
+            axios.get('/api/cart/shoes/get')
+            .then(response =>{
+                let itemsCount = response.data.data.length;
+
+                itemsCountEl.innerHTML = itemsCount;
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            })
+
         });
-    });
-</script>
+    </script>
 
 {{!-- 
     <script src="/javascript/shoe-catalogue.js"></script>
