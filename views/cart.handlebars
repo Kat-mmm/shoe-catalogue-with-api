@@ -173,7 +173,7 @@
                         <div class="cart-column">Total</div>
                     </div>
                     {{#each shoes}}
-                        <div class="cart-shoe" data-shoe-id="{{id}}">
+                        <div class="cart-shoe" data-item="{{id}}">
                             <div class="shoe-image" >
                                 <img src="{{img_url}}" alt="{{brand}}">
                                 <h4>{{brand}} - <span>{{color}}</span></h4>
@@ -261,18 +261,31 @@
 
                 axios.post(`/api/cart/add/${addBtn}`)
                 .then(response => {
-                    let shoeId = response.data.shoeId;
+                    
+                    axios.get('/api/cart/shoes/get')
+                    .then( response => {
+                        let total = response.data.total;
 
-                    let shoeElement = document.querySelector(`[data-shoe-id="${shoeId}"]`);
+                        grandTotalEl.innerHTML = 'R ' + total;
+                        subTotalEl.innerHTML = 'R ' + total;
 
-                    let quantityElement = shoeElement.querySelector('.quantity');
-                    let totalElement = shoeElement.querySelector('.cart-total');
+                        let shoes = response.data.data;
 
-                    let newQuantity = response.data.quantity; 
-                    let newTotal = response.data.total;
+                        let cartShoe = document.querySelector(`[data-item="${addBtn}"]`);
+                        let quantityEl = cartShoe.querySelector('.quantity');
+                        let totalEl = cartShoe.querySelector('.cart-total');
 
-                    quantityElement.textContent = newQuantity;
-                    totalElement.textContent = `R ${newTotal}`;
+                        shoes.forEach(shoe => {
+                            if(shoe.id === parseInt(addBtn)){
+                                quantityEl.innerHTML =  shoe.quantity;
+                                totalEl.innerHTML = 'R ' + shoe.total;
+                            }
+                        })
+                    })
+                    .catch(function(error) {
+                        console.error('Error:', error);
+                    });
+                    
                 })
                 .catch(function(error) {
                     console.error('Error:', error);
@@ -287,6 +300,40 @@
                 
                 let minusBtn = btn.dataset.subtract;
 
+                axios.post(`/api/cart/quantity/reduce/${minusBtn}`)
+                .then(response => {
+
+                    axios.get('/api/cart/shoes/get')
+                    .then( response => {
+                        let total = response.data.total;
+
+                        grandTotalEl.innerHTML = 'R ' + total;
+                        subTotalEl.innerHTML = 'R ' + total;
+
+                        let shoes = response.data.data;
+
+                        let cartShoe = document.querySelector(`[data-item="${minusBtn}"]`);
+                        let quantityEl = cartShoe.querySelector('.quantity');
+                        let totalEl = cartShoe.querySelector('.cart-total');
+
+                        shoes.forEach(shoe => {
+                            if(shoe.id === parseInt(minusBtn)){
+                                quantityEl.innerHTML =  shoe.quantity;
+                                totalEl.innerHTML = 'R ' + shoe.total;
+                            }
+                        })
+                    })
+                    .catch(function(error) {
+                        console.error('Error:', error);
+                    });
+
+
+
+                })
+                .catch(function(error) {
+                    console.log('Error:', error);
+                });
+
             })
         })
 
@@ -300,6 +347,11 @@
                 .then(response => {
                     axios.get('/api/cart/shoes/get')
                     .then(response => {
+                        let total = response.data.total;
+
+                        grandTotalEl.innerHTML = 'R ' + total;
+                        subTotalEl.innerHTML = 'R ' + total;
+
                         let shoesContainer = document.querySelector('.cart-items-container');
                         shoesContainer.innerHTML = '';
 

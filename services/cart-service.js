@@ -41,11 +41,19 @@ export default function CartService(db) {
         await db.none(`DELETE FROM cart WHERE user_id=$1`, [userId]);
     }
     
+    async function updateQuantity(userId, shoeId){
+        await db.none(
+            `UPDATE cart SET quantity = quantity - 1 WHERE user_id = $1 AND shoe_id = $2`,
+            [userId, shoeId]
+        );
+    }
+
     return{
         addToCart,
         getCart,
         getCartShoes,
         clearCart,
-        removeFromCart
+        removeFromCart,
+        updateQuantity
     }
 }

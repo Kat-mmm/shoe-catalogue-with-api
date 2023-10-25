@@ -83,6 +83,25 @@ export default function CartApi(cartService) {
         }
     }
 
+    async function reduceQuantity(req, res){
+        try{
+            const userId = req.session.user.id;
+            const shoeId = req.params.shoeid;
+
+            await cartService.updateQuantity(userId, shoeId);
+
+            res.json({
+                status: 'success',
+            });
+        }
+        catch(err){
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
+
     async function clearCart(req, res){
         try {
             const userId = req.session.user.id;
@@ -105,6 +124,7 @@ export default function CartApi(cartService) {
         getCart,
         getCartShoes,
         removeFromCart,
-        clearCart
+        clearCart,
+        reduceQuantity
     }
 }
