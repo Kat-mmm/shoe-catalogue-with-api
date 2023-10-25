@@ -18,6 +18,13 @@ export default function ShoesRoutes(ShoesService){
     async function checkout(req, res){
         let shoesData = await ShoesService.getCartShoes(req.session.user.id);
 
+        shoesData = shoesData.map(shoe => {
+            return {
+                ...shoe,
+                total: shoe.price * shoe.quantity
+            };
+        });
+
         res.render('cart', { shoes: shoesData});
     }
 

@@ -55,8 +55,8 @@ app.get('/logout', authRoutes.logout);
 app.get('/', authenticateUser, authRoutes.getLogin);
 app.get('/admin', authenticateUser, checkAdmin, shoesRoutes.index)
 app.get('/shoes', authenticateUser, shoesRoutes.getShoes)
-app.get('/shoe/add', shoesRoutes.addShoe);
-app.get('/shoe/checkout', cartRoutes.checkout)
+app.get('/shoe/add', authenticateUser, checkAdmin, shoesRoutes.addShoe);
+app.get('/shoe/checkout', authenticateUser, cartRoutes.checkout)
 app.post('/shoe/add', shoesRoutes.addNewShoe);
 
 //shoes api routes
@@ -75,11 +75,11 @@ app.post('/api/shoes', shoesAPI.addShoeToStock)
 app.get('/api/cart/get', cartAPI.getCart);
 app.get('/api/cart/shoes/get', cartAPI.getCartShoes);
 app.post('/api/cart/add/:shoeId', cartAPI.addToCart);
-// app.post('/api/cart/remove/:shoeId', cartAPI.removeFromCart);
+app.post('/api/cart/remove/:shoeId', cartAPI.removeFromCart);
 
 function authenticateUser(req, res, next) {
     if (req.session.user) {
-        next();
+        next(); 
     } else {
         res.redirect('/login');
     }

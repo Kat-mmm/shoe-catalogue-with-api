@@ -2,42 +2,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/css/index.css">
     <style>
+        .container{
+            display: flex;
+            flex-direction: column;
+        }
         nav ul{
             margin-right: 50px;
         }
         .cart-items-container {
-            
             display: flex;
             flex-direction: column;
-            flex-wrap: wrap;
-            gap: 20px;
+            width: 100%;
         }
 
         .cart-shoe {
-            border: 1px solid #ccc;
+            display: grid;
+            grid-template-columns: 30% 65% 5%;
             padding: 10px;
-            max-width: 400px;
-            display: flex;
+            background-color: white;
+            align-items: center;
         }
 
         .cart-shoe img {
-            max-width: 100%;
+            width: 50%;
             height: auto;
-            margin-bottom: 10px;
+            text-transform: capitalize;
+            
         }
 
         .shoe-details {
-            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-right: 20px;   
+        }
+
+        .cart-header{
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .shoe-image{
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            text-transform: capitalize;
         }
 
         .cart-price {
-            font-weight: bold;
+            margin-left: -10px;
+        }
+
+        .cart-total{
+            margin-left: 60px;
         }
 
         .cart-size span {
+        }
+
+        .cart-quantity {
+            display: flex;
+            align-items: center;
+            margin-left: 75px;
+        }
+
+        .quantity{
+            font-size: 1em;
+            text-align: center;
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+
+        .summary-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .summary-section h2 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .totals {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .totals div {
+            flex: 1;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .totals div p:first-child {
             font-weight: bold;
+        }
+
+        button.checkout-btn {
+            background-color: #f9aa33;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: small;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button.checkout-btn:hover {
+            background-color: #f9aa33;
+        }
+
+        .sub-total, .grand-total, .shipping {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-remove{
+            font-size: large;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .minus, .add{
+            background-color: transparent;
+            border: 1px solid transparent;
+            font-weight: bolder;
+            width: 20px;
+            height: 20px;
+            background-color: #d8d8d8;
+            border-radius: 50%;
+            cursor: pointer;
+            display: grid;
+            align-items: center;
         }
     </style>
     <title>Checkout</title>
@@ -56,23 +166,53 @@
             <div class="bag-section">
                 <h2>Shopping Bag</h2>
                 <div class="cart-items-container">
-                  {{#each shoes}}
-                      <div class="cart-shoe">
-                          <img src="{{img_url}}" alt="{{brand}}">
-                          <div class="shoe-details">
-                              <h4>{{brand}} - <span>{{color}}</span></h4>
-                              <p class="cart-price">R {{price}}</p>
-                              <div class="cart-details">
-                                  <p class="cart-size">Size: <span>{{size}}</span></p>
-                              </div>
-                          </div>
-                      </div>
-                  {{/each}}
-              </div>
-
+                    <div class="cart-header">
+                        <div class="cart-column">Product</div>
+                        <div class="cart-column">Price</div>
+                        <div class="cart-column">Quantity</div>
+                        <div class="cart-column">Total</div>
+                    </div>
+                    {{#each shoes}}
+                        <div class="cart-shoe">
+                            <div class="shoe-image">
+                                <img src="{{img_url}}" alt="{{brand}}">
+                                <h4>{{brand}} - <span>{{color}}</span></h4>
+                            </div>
+                            <div class="shoe-details">
+                                <p class="cart-price">R {{price}}</p>
+                                <div class="cart-quantity">
+                                    <button class="minus" data-increase="{{id}}">-</button>
+                                        <p class="quantity">{{quantity}}</p>
+                                    {{!-- <input type="text" value="{{quantity}}" class="quantity-input"> --}}
+                                    <button class="add" data-decrease="{{id}}">+</button>
+                                </div>
+                                <p class="cart-total">R {{total}}</p>
+                            </div>
+                            <div>
+                                <button class="btn-remove" data-remove="{{id}}"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
             </div>
+
             <div class="summary-section">
                 <h2>Order Summary</h2>
+                <div class="totals">
+                    <div class="sub-total">
+                        <p>Subtotal</p>
+                        <p class="subTotal">R 500.00</p>
+                    </div>
+                    <div class="shipping">
+                        <p>Shipping</p>
+                        <p>Free</p>
+                    </div>
+                    <div class="grand-total">
+                        <p>Total</p>
+                        <p class="grandTotal"></p>
+                    </div>
+                </div>
+                <button class="checkout-btn">CHECKOUT</button>
             </div>
         </section>
 
@@ -107,4 +247,62 @@
         </footer>
     </div>
 </body>
+<script src="https://kit.fontawesome.com/0dc0e0665a.js" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let grandTotalEl = document.querySelector('.grandTotal');
+        let subTotalEl = document.querySelector('.subTotal');
+        const minusBtns = document.querySelectorAll('.minus');
+        const addBtns = document.querySelectorAll('.add');
+        const removeBtns = document.querySelectorAll('.btn-remove');
+
+        addBtns.forEach(btn => {
+            btn.addEventListener('click', function(event){
+                console.log('btn clicked');
+
+                let addBtn = event.target.dataset.increase;
+                console.log(addBtn);
+            });
+        })
+
+        minusBtns.forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                console.log('minus btn clicked');
+                
+                let minusBtn = btn.dataset.decrease;
+                console.log(minusBtn);
+
+            })
+        })
+
+
+        removeBtns.forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                let shoeId = btn.dataset.remove;
+                console.log(shoeId);
+                
+                axios.post(`/api/cart/remove/${shoeId}`)
+                .then( response => {
+                    console.log(response)
+                    
+                })
+                .catch(function(error) {
+                    console.log('Error: ' + error);
+                })
+            });
+        });
+
+
+        axios.get('/api/cart/shoes/get')
+        .then( response => {
+            let total = response.data.total;
+
+            grandTotalEl.innerHTML = 'R ' + total;
+            subTotalEl.innerHTML = 'R ' + total;
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+        });
+    }); 
+</script>
 </html>

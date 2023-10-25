@@ -60,8 +60,8 @@ export default function CartApi(cartService) {
 
     async function removeFromCart(req, res){
         try {
-            const userId = req.session.user.id; // Assuming you have user information stored in req.user
-            const shoeId = req.params.id; // Assuming you pass the shoe id as a parameter
+            const userId = req.session.user.id;
+            const shoeId = req.params.id; 
     
             await cartService.removeFromCart(userId, shoeId);
     
@@ -78,7 +78,7 @@ export default function CartApi(cartService) {
 
     async function clearCart(req, res){
         try {
-            const userId = req.session.user.id; // Assuming you have user information stored in req.user
+            const userId = req.session.user.id;
     
             await cartService.clearCart(userId);
     

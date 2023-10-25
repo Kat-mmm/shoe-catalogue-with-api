@@ -498,27 +498,21 @@ header img{
   border-radius: 3px;
 }
 
-
-
-
 .main-section{
   margin-top: 140px;
   display: grid;
-  grid-template-columns: 60% 40%;
-  margin-left: 40px;
-  margin-right: 20px;
+  grid-template-columns: 70% 30%;
+  width: 97%;
+  align-self: center;
 }
 
 .bag-section{
-  background-color: #888;
+  width: 100%;
 }
 
 .summary-section{
   background-color: #ccc;
 }
-
-
-
 
 .left{
   width: 100%;
