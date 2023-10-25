@@ -39,11 +39,18 @@ export default function CartApi(cartService) {
         try {
             const userId = req.session.user.id;
     
-            const cartShoes = await cartService.getCartShoes(userId);
+            let cartShoes = await cartService.getCartShoes(userId);
     
             const total = cartShoes.reduce((acc, item) => {
                 return acc + (item.price * item.quantity);
             }, 0);
+
+            cartShoes = cartShoes.map(shoe => {
+                return {
+                    ...shoe,
+                    total: shoe.price * shoe.quantity
+                };
+            });
     
             res.json({
                 status: 'success',
@@ -61,7 +68,7 @@ export default function CartApi(cartService) {
     async function removeFromCart(req, res){
         try {
             const userId = req.session.user.id;
-            const shoeId = req.params.id; 
+            const shoeId = req.params.shoeid; 
     
             await cartService.removeFromCart(userId, shoeId);
     

@@ -173,18 +173,17 @@
                         <div class="cart-column">Total</div>
                     </div>
                     {{#each shoes}}
-                        <div class="cart-shoe">
-                            <div class="shoe-image">
+                        <div class="cart-shoe" data-shoe-id="{{id}}">
+                            <div class="shoe-image" >
                                 <img src="{{img_url}}" alt="{{brand}}">
                                 <h4>{{brand}} - <span>{{color}}</span></h4>
                             </div>
                             <div class="shoe-details">
                                 <p class="cart-price">R {{price}}</p>
                                 <div class="cart-quantity">
-                                    <button class="minus" data-increase="{{id}}">-</button>
+                                    <button class="minus" data-subtract="{{id}}">-</button>
                                         <p class="quantity">{{quantity}}</p>
-                                    {{!-- <input type="text" value="{{quantity}}" class="quantity-input"> --}}
-                                    <button class="add" data-decrease="{{id}}">+</button>
+                                    <button class="add" data-add="{{id}}">+</button>
                                 </div>
                                 <p class="cart-total">R {{total}}</p>
                             </div>
@@ -258,19 +257,35 @@
 
         addBtns.forEach(btn => {
             btn.addEventListener('click', function(event){
-                console.log('btn clicked');
+                let addBtn = btn.dataset.add;
 
-                let addBtn = event.target.dataset.increase;
-                console.log(addBtn);
+                axios.post(`/api/cart/add/${addBtn}`)
+                .then(response => {
+                    let shoeId = response.data.shoeId;
+
+                    let shoeElement = document.querySelector(`[data-shoe-id="${shoeId}"]`);
+
+                    let quantityElement = shoeElement.querySelector('.quantity');
+                    let totalElement = shoeElement.querySelector('.cart-total');
+
+                    let newQuantity = response.data.quantity; 
+                    let newTotal = response.data.total;
+
+                    quantityElement.textContent = newQuantity;
+                    totalElement.textContent = `R ${newTotal}`;
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                });
             });
-        })
+        });
+
 
         minusBtns.forEach(btn => {
             btn.addEventListener('click', (event) => {
                 console.log('minus btn clicked');
                 
-                let minusBtn = btn.dataset.decrease;
-                console.log(minusBtn);
+                let minusBtn = btn.dataset.subtract;
 
             })
         })
@@ -278,17 +293,51 @@
 
         removeBtns.forEach(btn => {
             btn.addEventListener('click', (event) => {
-                let shoeId = btn.dataset.remove;
-                console.log(shoeId);
-                
-                axios.post(`/api/cart/remove/${shoeId}`)
-                .then( response => {
-                    console.log(response)
-                    
+                let shoeid = btn.dataset.remove;
+                console.log(shoeid);
+
+                axios.post(`/api/cart/remove/${shoeid}`)
+                .then(response => {
+                    axios.get('/api/cart/shoes/get')
+                    .then(response => {
+                        let shoesContainer = document.querySelector('.cart-items-container');
+                        shoesContainer.innerHTML = '';
+
+                        let shoes = response.data.data;
+
+                        shoes.forEach(shoe => {
+                            let shoeElement = document.createElement('div');
+                            shoeElement.classList.add('cart-shoe');
+                            shoeElement.innerHTML = `
+                                    <div class="shoe-image">
+                                        <img src="${shoe.img_url}" alt="${shoe.brand}">
+                                        <h4>${shoe.brand} - <span>${shoe.color}</span></h4>
+                                    </div>
+                                    <div class="shoe-details">
+                                        <p class="cart-price">R ${shoe.price}</p>
+                                        <div class="cart-quantity">
+                                            <button class="minus" data-increase="${shoe.id}">-</button>
+                                            <p class="quantity">${shoe.quantity}</p>
+                                            <button class="add" data-decrease="${shoe.id}">+</button>
+                                        </div>
+                                        <p class="cart-total">R ${shoe.total}</p>
+                                    </div>
+                                    <div>
+                                        <button class="btn-remove" data-remove="${shoe.id}"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                            `;
+
+                            shoesContainer.appendChild(shoeElement);
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error('Error:', error);
+                    });
+
                 })
                 .catch(function(error) {
                     console.log('Error: ' + error);
-                })
+                });
             });
         });
 
