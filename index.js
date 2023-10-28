@@ -16,7 +16,7 @@ import CartApi from './api/cart-api.js';
 //Service Instances
 const shoesService = ShoesService(db);
 const userService = UserService(db);
-const cartService =  CartService(db);
+const cartService =  CartService(db); 
 
 //Routes Instances
 const authRoutes = AuthRoutes(userService, bcrypt);
@@ -56,7 +56,8 @@ app.get('/', authenticateUser, authRoutes.getLogin);
 app.get('/admin', authenticateUser, checkAdmin, shoesRoutes.index)
 app.get('/shoes', authenticateUser, shoesRoutes.getShoes)
 app.get('/shoe/add', authenticateUser, checkAdmin, shoesRoutes.addShoe);
-app.get('/shoe/checkout', authenticateUser, cartRoutes.checkout)
+app.get('/shoe/checkout', authenticateUser, cartRoutes.checkout);
+app.get('/shoes/cart/pay', authenticateUser, cartRoutes.pay);
 app.post('/shoe/add', shoesRoutes.addNewShoe);
 
 //shoes api routes
@@ -77,6 +78,7 @@ app.get('/api/cart/shoes/get', cartAPI.getCartShoes);
 app.post('/api/cart/add/:shoeId', cartAPI.addToCart);
 app.post('/api/cart/remove/:shoeid', cartAPI.removeFromCart);
 app.post('/api/cart/quantity/reduce/:shoeid', cartAPI.reduceQuantity);
+app.post('/api/cart/clear/all', cartAPI.clearCart);
 
 function authenticateUser(req, res, next) {
     if (req.session.user) {

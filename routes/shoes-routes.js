@@ -28,6 +28,12 @@ export default function ShoesRoutes(ShoesService){
         res.render('cart', { shoes: shoesData});
     }
 
+    async function pay(req, res) {
+        let shoesData = await ShoesService.getCartShoes(req.session.user.id);
+
+        res.render('pay', { shoes: shoesData});
+    }
+
     async function addNewShoe(req, res){
         try{
             await ShoesService.addShoe(req.body);
@@ -45,7 +51,8 @@ export default function ShoesRoutes(ShoesService){
         addShoe,
         addNewShoe,
         checkout,
-        getShoes
+        getShoes,
+        pay
     }
 
 }

@@ -581,3 +581,154 @@ header img{
   justify-self: flex-start;
   margin-left: 5px;
 }
+
+.cart-items-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.cart-shoe {
+  display: grid;
+  grid-template-columns: 30% 65% 5%;
+  padding: 10px;
+  background-color: white;
+  align-items: center;
+}
+
+.cart-shoe img {
+  width: 50%;
+  height: auto;
+  text-transform: capitalize;
+  
+}
+
+.shoe-details {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-right: 20px;   
+}
+
+.cart-header{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.shoe-image{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.cart-price {
+  margin-left: -10px;
+}
+
+.cart-total{
+  margin-left: 60px;
+}
+
+.cart-quantity {
+  display: flex;
+  align-items: center;
+  margin-left: 75px;
+}
+
+.quantity{
+  font-size: 1em;
+  text-align: center;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.summary-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.summary-section h2 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.totals div {
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.totals div p:first-child {
+  font-weight: bold;
+}
+
+a.checkout-btn {
+  background-color: #f9aa33;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: small;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+a.checkout-btn:hover {
+  background-color: #f9aa33;
+}
+
+.sub-total, .grand-total, .shipping {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-remove{
+  font-size: large;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.minus, .add{
+  background-color: transparent;
+  border: 1px solid transparent;
+  font-weight: bolder;
+  width: 20px;
+  height: 20px;
+  background-color: #d8d8d8;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  align-items: center;
+}
+.shop-bag-headers{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 50px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.empty-bag{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
