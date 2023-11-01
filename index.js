@@ -70,7 +70,7 @@ app.get('/api/shoes/brand/:brandname/size/:size', shoesAPI.getShoesByBrandAndSiz
 app.get('/api/shoes/color/:color/size/:size', shoesAPI.getShoesByColorSize)
 app.get('/api/shoes/brand/:brandname/color/:color', shoesAPI.getShoesByBrandColor)
 app.get('/api/shoes/brand/:brandname/size/:size/color/:color', shoesAPI.getShoesByBrandSizeColor)
-app.post('/api/shoes/sold/:id', shoesAPI.updateStockLevel)
+app.post('/api/shoes/sold/:shoeId', shoesAPI.updateStockLevel)
 app.post('/api/shoes', shoesAPI.addShoeToStock)
 
 //cart api routes

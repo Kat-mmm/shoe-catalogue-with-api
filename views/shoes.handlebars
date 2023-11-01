@@ -195,6 +195,16 @@
 
                     axios.post(`/api/cart/add/${shoeId}`)
                     .then(function(response) {
+                        //Update stock
+                        axios.post(`/api/shoes/sold/${shoeId}`)
+                        .then(response => {
+                            
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+
+                        //update the views
                         axios.get('/api/cart/shoes/get')
                         .then(response =>{
                             let itemsCount = response.data.data.length;
