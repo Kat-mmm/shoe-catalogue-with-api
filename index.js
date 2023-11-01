@@ -58,6 +58,7 @@ app.get('/shoes', authenticateUser, shoesRoutes.getShoes)
 app.get('/shoe/add', authenticateUser, checkAdmin, shoesRoutes.addShoe);
 app.get('/shoe/checkout', authenticateUser, cartRoutes.checkout);
 app.get('/shoes/cart/pay', authenticateUser, cartRoutes.pay);
+app.post('/cart/shoes/pay', cartRoutes.cartPay);
 app.post('/shoe/add', shoesRoutes.addNewShoe);
 
 //shoes api routes

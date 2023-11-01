@@ -31,7 +31,18 @@ export default function ShoesRoutes(ShoesService){
     async function pay(req, res) {
         let shoesData = await ShoesService.getCartShoes(req.session.user.id);
 
-        res.render('pay', { shoes: shoesData});
+        let cartItemsCount = shoesData.length;
+
+        const total = shoesData.reduce((acc, item) => {
+            return acc + (item.price * item.quantity);
+        }, 0);
+
+        const messages = {
+            success: req.flash('success')[0],
+            error: req.flash('error')[0]
+        };
+
+        res.render('pay', { shoes: shoesData, cartItemsCount, messages, total});
     }
 
     async function addNewShoe(req, res){
@@ -46,13 +57,39 @@ export default function ShoesRoutes(ShoesService){
         res.redirect('/shoe/add');
     }
 
+    async function cartPay(req, res) {
+        try{
+            let userId = req.session.user.id;
+            let amountToPay = req.body.amount;
+            let cartShoes = await ShoesService.getCartShoes(userId);
+
+            const total = cartShoes.reduce((acc, item) => {
+                return acc + (item.price * item.quantity);
+            }, 0);
+
+            if(amountToPay >= total){
+                await ShoesService.clearCart(userId);
+                req.flash('success', 'Payment successful!');
+            }
+            else{
+                req.flash('error', 'Insufficient funds!');
+            }
+
+            res.redirect('/shoes/cart/pay');
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
     return{
         index,
         addShoe,
         addNewShoe,
         checkout,
         getShoes,
-        pay
+        pay,
+        cartPay
     }
 
 }

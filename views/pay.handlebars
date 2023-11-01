@@ -78,6 +78,13 @@
             background-color: #e7a33d;
         }
 
+        .error-msg{
+            color: red;
+        }
+
+        .success-msg{
+            color: green;
+        }
         
         footer{
             width: 96%;
@@ -96,28 +103,31 @@
                 <a href="/logout">Logout</a>
                 <a href="/shoe/checkout" class="bag">
                     <i class="fa-sharp fa-solid fa-bag-shopping fa-xl"></i>
-                    <span class="cart-items">0</span>
+                    <span class="cart-items">{{cartItemsCount}}</span>
                 </a>
             </div>
         </nav>
 
         <div class="pay-container">
-            <h2>Payment</h2>
+            <h2><i class="fa-solid fa-lock"></i>&nbsp;Payment</h2>
             
             <div class="amount">
-                <p>R 256888</p>
+                <p>R {{total}}</p>
             </div>
-            <form action="/api/cart/pay" method="POST">
+            <form action="/cart/shoes/pay" method="POST">
                 <div class="pay-inputs">
-                    <label for="payment-amount">Enter amount</label>
-                    <input type="number" name="payment-amount" id="payment-amount">
+                    <label for="amount">Enter amount</label>
+                    <input type="number" name="amount" id="payment-amount">
                 </div>
+                {{#if messages.error}}
+                    <p class="error-msg">{{messages.error}}</p>
+                {{else if messages.success}}
+                    <p class="success-msg">{{messages.success}}</p>
+                {{/if}}
                 <button type="submit" class="btn-pay">Pay Now</button>
             </form>
         </div>
 
-
-        
         <footer class="custom-footer">
             <div class="custom-container">
               <div class="row">

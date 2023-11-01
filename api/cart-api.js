@@ -119,12 +119,42 @@ export default function CartApi(cartService) {
         }
     }
 
+    async function payCart(req, res) {
+        try {
+            let userAmount = req.body.amount;
+            const userId = req.session.user.id;
+    
+            let cartShoes = await cartService.getCartShoes(userId);
+            let msg = '';
+
+            if(userAmount >= cartShoes.total){
+                clearCart();
+                msg = 'Paid successfully!';
+            }
+            else{
+                msg = 'Not enough funds, please try again!';
+                payCart();
+            }
+    
+            res.json({
+                status: 'success',
+                msg
+            });
+        } catch(err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
+
     return{
         addToCart,
         getCart,
         getCartShoes,
         removeFromCart,
         clearCart,
-        reduceQuantity
+        reduceQuantity,
+        payCart
     }
 }
