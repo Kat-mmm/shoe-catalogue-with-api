@@ -20,6 +20,11 @@
             </ul>
         </nav>
         <div id="popup-container">
+            {{#if messages.error}}
+                <p class="error-msg">{{messages.error}}</p>
+            {{else if messages.success}}
+                <p class="success-msg">{{messages.success}}</p>
+            {{/if}}
             <div id="form-container">
               <h2>Add New Shoe</h2>
               <form id="shoe-form" action="/shoe/add" method="POST">

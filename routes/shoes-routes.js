@@ -12,7 +12,13 @@ export default function ShoesRoutes(ShoesService){
     }
 
     async function addShoe(req, res){
-        res.render('add-shoe');
+
+        const messages = {
+            success: req.flash('success')[0],
+            error: req.flash('error')[0]
+        };
+
+        res.render('add-shoe', {messages});
     }
 
     async function checkout(req, res){

@@ -12,9 +12,9 @@
         <nav>
             <img src="/images/logo.png" alt="logo">
             <ul>
-                <a href="#home"><li>home</li></a>
-                <a href="#main"><li>shop all</li></a>
-                <a href="#contactForm"><li>contact</li></a>
+                <a href="#home"><li>Home</li></a>
+                <a href="#main"><li>Shop all</li></a>
+                <a href="#contactForm"><li>Contact</li></a>
             </ul>
             <div class="right-nav">
                 <div class="user-p">
@@ -86,13 +86,13 @@
 
             <div class="shoes-container">
                {{#each shoes}}
-                    <div class="shoe">
+                    <div class="shoe" data-product="{{id}}">
                         <img src={{img_url}} alt={{brand}}>
                         <h4>{{brand}} - <span>{{color}}</span></h4>
                         <p class="price">R {{price}}</p>
                         <div class="details">
                             <p class="size">Size: <span>{{size}}</span></p>
-                            <p class="stock">In stock: <span>{{in_stock}}</span></p>
+                            <p class="stock">In stock: <span class="stock-count">{{in_stock}}</span></p>
                         </div>
                         <button class="add-to-cart" data-shoeid="{{id}}">Add to Cart</button>
                     </div>
@@ -162,6 +162,7 @@
                         filteredShoes.forEach(function(shoe) {
                             const shoeElement = document.createElement('div');
                             shoeElement.classList.add('shoe');
+                            shoeElement.setAttribute('data-product', `${shoe.id}`)
 
                             shoeElement.innerHTML = `
                                 <img src="${shoe.img_url}" alt="${shoe.brand}">
@@ -169,7 +170,7 @@
                                 <p class="price">R ${shoe.price}</p>
                                 <div class="details">
                                     <p class="size">Size: <span>${shoe.size}</span></p>
-                                    <p class="stock">In stock: <span>${shoe.in_stock}</span></p>
+                                    <p class="stock">In stock: <span class="stock-count">${shoe.in_stock}</span></p>
                                 </div>
                                 <button class="add-to-cart" data-shoeid="${shoe.id}">Add to Cart</button>
                             `;
@@ -191,8 +192,6 @@
                 if (event.target.classList.contains('add-to-cart')) {
                     const shoeId = event.target.dataset.shoeid;
 
-                    console.log(shoeId)
-
                     axios.post(`/api/cart/add/${shoeId}`)
                     .then(function(response) {
                         //Update stock
@@ -208,8 +207,18 @@
                         axios.get('/api/cart/shoes/get')
                         .then(response =>{
                             let itemsCount = response.data.data.length;
+                            let shoes = response.data.data;
 
                             itemsCountEl.innerHTML = itemsCount;
+
+                            let cartShoe = document.querySelector(`[data-product="${shoeId}"]`);
+                            let stockLevel = cartShoe.querySelector('.stock-count');
+
+                            shoes.forEach(shoe => {
+                            if(shoe.id === parseInt(shoeId)){
+                                stockLevel.innerHTML = shoe.in_stock;
+                            }
+                        })
                         })
                         .catch(error => {
                             console.log('Error:', error);
