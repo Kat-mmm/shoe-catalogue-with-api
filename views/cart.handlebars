@@ -41,8 +41,8 @@
                     {{#each shoes}}
                         <div class="cart-shoe" data-item="{{id}}">
                             <div class="shoe-image" >
-                                <img src="{{img_url}}" alt="{{brand}}">
-                                <h4>{{brand}} - <span>{{color}}</span></h4>
+                                <img src="{{img_url}}" alt="{{brand}}" class="product-img">
+                                <h4 class="brandname">{{brand}} - <span class="product-color">{{color}}</span></h4>
                             </div>
                             <div class="shoe-details">
                                 <p class="cart-price">R {{price}}</p>
@@ -194,9 +194,6 @@
                     .catch(function(error) {
                         console.error('Error:', error);
                     });
-
-
-
                 })
                 .catch(function(error) {
                     console.log('Error:', error);
@@ -220,35 +217,11 @@
                         grandTotalEl.innerHTML = 'R ' + total;
                         subTotalEl.innerHTML = 'R ' + total;
 
-                        let shoesContainer = document.querySelector('.cart-items-container');
-                        shoesContainer.innerHTML = '';
-
                         let shoes = response.data.data;
 
-                        shoes.forEach(shoe => {
-                            let shoeElement = document.createElement('div');
-                            shoeElement.classList.add('cart-shoe');
-                            shoeElement.innerHTML = `
-                                    <div class="shoe-image">
-                                        <img src="${shoe.img_url}" alt="${shoe.brand}">
-                                        <h4>${shoe.brand} - <span>${shoe.color}</span></h4>
-                                    </div>
-                                    <div class="shoe-details">
-                                        <p class="cart-price">R ${shoe.price}</p>
-                                        <div class="cart-quantity">
-                                            <button class="minus" data-increase="${shoe.id}">-</button>
-                                            <p class="quantity">${shoe.quantity}</p>
-                                            <button class="add" data-decrease="${shoe.id}">+</button>
-                                        </div>
-                                        <p class="cart-total">R ${shoe.total}</p>
-                                    </div>
-                                    <div>
-                                        <button class="btn-remove" data-remove="${shoe.id}"><i class="fa-solid fa-trash"></i></button>
-                                    </div>
-                            `;
-
-                            shoesContainer.appendChild(shoeElement);
-                        });
+                        let product = document.querySelector(`[data-item="${shoeid}"]`);
+                        product.innerHTML = '';
+                
                     })
                     .catch(function(error) {
                         console.error('Error:', error);
