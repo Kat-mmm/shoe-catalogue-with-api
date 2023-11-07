@@ -125,28 +125,35 @@ export default function CartApi(cartService) {
             const userId = req.session.user.id;
     
             let cartShoes = await cartService.getCartShoes(userId);
+    
+            const total = cartShoes.reduce((acc, item) => {
+                return acc + (item.price * item.quantity);
+            }, 0);
+    
             let msg = '';
-
-            if(userAmount >= cartShoes.total){
-                clearCart();
+    
+            if (userAmount >= total) {
+                await cartService.clearCart(userId);
                 msg = 'Paid successfully!';
-            }
-            else{
+                res.json({
+                    status: 'success',
+                    msg
+                });
+            } else {
                 msg = 'Not enough funds, please try again!';
-                payCart();
+                res.json({
+                    status: 'error',
+                    msg
+                });
             }
     
-            res.json({
-                status: 'success',
-                msg
-            });
-        } catch(err) {
+        } catch (err) {
             res.json({
                 status: 'error',
                 error: err.stack
             });
         }
-    }
+    }    
 
     return{
         addToCart,

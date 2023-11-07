@@ -80,6 +80,7 @@ app.post('/api/cart/add/:shoeId', cartAPI.addToCart);
 app.post('/api/cart/remove/:shoeid', cartAPI.removeFromCart);
 app.post('/api/cart/quantity/reduce/:shoeid', cartAPI.reduceQuantity);
 app.post('/api/cart/clear/all', cartAPI.clearCart);
+app.post('/api/cart/shoes/pay', cartAPI.payCart);
 
 function authenticateUser(req, res, next) {
     if (req.session.user) {
