@@ -24,9 +24,9 @@
                 <div>
                     <img src="/images/logo.png" alt="logo" class="logo">
                 </div>
-                {{!-- {{#if messages.error}}
-                        <div class="error-message animate__shakeX">{{messages.error}}</div>
-                {{/if}} --}}
+                {{#if messages.error}}
+                        <div class="error-msg">{{messages.error}}</div>
+                {{/if}}
                 <form action="/login" method="post">
                     <section>
                         <label for="username">Username</label>
@@ -43,5 +43,13 @@
         </div>
         
     </div>
+    <script>
+        let errorEl = document.querySelector('.error-msg');
+
+        setTimeout(() => {
+            errorEl.innerHTML = '';
+            errorEl.classList.add('none')
+        }, 1700);
+    </script>
 </body>
 </html>

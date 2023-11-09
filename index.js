@@ -12,6 +12,7 @@ import AuthRoutes from './routes/authRoutes.js';
 import UserService from './services/user-service.js';
 import CartService from './services/cart-service.js';
 import CartApi from './api/cart-api.js';
+import Authentication from './middleware/authentication.js';
 
 //Service Instances
 const shoesService = ShoesService(db);
@@ -24,6 +25,9 @@ const shoesRoutes = ShoesRoutes(shoesService);
 const cartRoutes = ShoesRoutes(cartService);
 const shoesAPI = ShoesApi(shoesService);
 const cartAPI = CartApi(cartService);
+
+//Authentication
+const {authenticateUser, checkAdmin} = Authentication();
 
 let app = express();
 
@@ -81,22 +85,6 @@ app.post('/api/cart/remove/:shoeid', cartAPI.removeFromCart);
 app.post('/api/cart/quantity/reduce/:shoeid', cartAPI.reduceQuantity);
 app.post('/api/cart/clear/all', cartAPI.clearCart);
 app.post('/api/cart/shoes/pay', cartAPI.payCart);
-
-function authenticateUser(req, res, next) {
-    if (req.session.user) {
-        next(); 
-    } else {
-        res.redirect('/login');
-    }
-}
-
-function checkAdmin(req, res, next) {
-    if (req.session.user && req.session.user.is_admin) {
-        next();
-    } else {
-        res.redirect('/');
-    }
-}
 
 let PORT = process.env.PORT || 3000;
 

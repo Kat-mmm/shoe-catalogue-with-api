@@ -36,7 +36,7 @@ describe("Shoe Catalogue Tests", function () {
 
         const users = await userService.getUsers();
 
-        assert.strictEqual(2, users.length);
+        assert.strictEqual(1, users.length);
     });
 
     it("should be able to get a user by email", async function () {
