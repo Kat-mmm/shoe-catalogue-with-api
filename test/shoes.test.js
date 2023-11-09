@@ -19,7 +19,7 @@ describe("Shoe Catalogue Tests", function () {
     beforeEach(async function () {
         try {
             await db.none("DELETE FROM cart;");
-            await db.none("DELETE FROM users WHERE name <> $1", ['admin']);
+            await db.none("DELETE FROM users;");
             await db.none('DELETE FROM shoes;')
         } catch (err) {
             console.log(err);
