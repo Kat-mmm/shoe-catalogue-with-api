@@ -1,6 +1,6 @@
 INSERT INTO shoes (color, brand, price, size, in_stock, img_url)
 VALUES
-    ('blue', 'Nike', 1600, 5, 5, './images/blue-nike.webp'),
+    ('blue', 'Nike', 1600, 5, 5, 'https://limitedsupply.co.za/cdn/shop/products/dunk-low-university-blue-release-date_1200x1200.jpg?v=1630790201'),
     ('orange', 'Adidas', 1999, 8, 3, 'https://assets.adidas.com/images/w_600,f_auto,q_auto/f587213eef3649839031ae7b0136f8a3_9366/NMD_R1_Shoes_Orange_HP9661_01_standard.jpg'),
     ('black', 'Puma', 2349, 3, 4, 'https://deichmann.scene7.com/asset/deichmann/US_01_400488_00?$rr_main$&defaultImage=default_obs'),
     ('red', 'New Balance', 1899, 6, 12, 'https://d2ob0iztsaxy5v.cloudfront.net/product/196369/1963693050_zm.jpg'),
