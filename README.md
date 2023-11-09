@@ -1,3 +1,6 @@
+#Shoe Catalogue Tests
+[![Node.js CI](https://github.com/Kat-mmm/shoe-catalogue-with-api/actions/workflows/nodejs.yml/badge.svg)](https://github.com/Kat-mmm/shoe-catalogue-with-api/actions/workflows/nodejs.yml)
+
 # Shoes Catalogue API
 
 This API provides endpoints for managing a shoes catalogue and a shopping cart.
